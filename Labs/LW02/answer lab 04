@@ -1,0 +1,1 @@
+The Jaro measures are smaller than the Jaro-Winkler given the fact that Jaro-Winkler "awards" aditional points considering the amount of characters that are the same in the beginning of both strings (prefix)
