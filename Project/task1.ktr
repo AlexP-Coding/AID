@@ -437,53 +437,53 @@
   </notepads>
   <order>
     <hop>
-      <from>CSV file input</from>
-      <to>Filter rows</to>
+      <from>DB A</from>
+      <to>Filter Jun23 A</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>CSV file input 2</from>
-      <to>Filter rows 2</to>
+      <from>DB B</from>
+      <to>Filter Jun23 B</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Join rows</from>
-      <to>Sort rows</to>
+      <from>Join rows by Mun</from>
+      <to>SortR by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows 2</from>
-      <to>Select values 2</to>
+      <from>Filter Jun23 B</from>
+      <to>Select MunKWh</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows</from>
-      <to>Select values</to>
+      <from>Filter Jun23 A</from>
+      <to>Select MunCPE</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort rows</from>
-      <to>Group by</to>
+      <from>SortR by Mun</from>
+      <to>Group by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values</from>
-      <to>Join rows</to>
+      <from>Select MunCPE</from>
+      <to>Join rows by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 2</from>
-      <to>Join rows</to>
+      <from>Select MunKWh</from>
+      <to>Join rows by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Group by</from>
+      <from>Group by Mun</from>
       <to>Text file output</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>CSV file input</name>
+    <name>DB A</name>
     <type>CsvInput</type>
     <description/>
     <distribute>N</distribute>
@@ -639,13 +639,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
+      <xloc>288</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>CSV file input 2</name>
+    <name>DB B</name>
     <type>CsvInput</type>
     <description/>
     <distribute>Y</distribute>
@@ -801,13 +801,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>256</xloc>
+      <xloc>288</xloc>
       <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Filter rows</name>
+    <name>Filter Jun23 A</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -817,7 +817,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>Select values</send_true_to>
+    <send_true_to>Select MunCPE</send_true_to>
     <send_false_to/>
     <compare>
       <condition>
@@ -872,7 +872,7 @@
     </GUI>
   </step>
   <step>
-    <name>Filter rows 2</name>
+    <name>Filter Jun23 B</name>
     <type>FilterRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -882,7 +882,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <send_true_to>Select values 2</send_true_to>
+    <send_true_to>Select MunKWh</send_true_to>
     <send_false_to/>
     <compare>
       <condition>
@@ -937,7 +937,7 @@
     </GUI>
   </step>
   <step>
-    <name>Group by</name>
+    <name>Group by Mun</name>
     <type>GroupBy</type>
     <description/>
     <distribute>Y</distribute>
@@ -983,13 +983,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>736</xloc>
+      <xloc>800</xloc>
       <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Join rows</name>
+    <name>Join rows by Mun</name>
     <type>JoinRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -1031,7 +1031,7 @@
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
+    <name>Select MunCPE</name>
     <type>SelectValues</type>
     <description/>
     <distribute>N</distribute>
@@ -1044,9 +1044,11 @@
     <fields>
       <field>
         <name>Municipality</name>
+        <rename/>
       </field>
       <field>
         <name>Number of CPE's</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1065,7 +1067,7 @@
     </GUI>
   </step>
   <step>
-    <name>Select values 2</name>
+    <name>Select MunKWh</name>
     <type>SelectValues</type>
     <description/>
     <distribute>Y</distribute>
@@ -1082,6 +1084,7 @@
       </field>
       <field>
         <name>Active Energy (kWh)</name>
+        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1100,7 +1103,7 @@
     </GUI>
   </step>
   <step>
-    <name>Sort rows</name>
+    <name>SortR by Mun</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -1136,7 +1139,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
+      <xloc>688</xloc>
       <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1229,7 +1232,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
+      <xloc>912</xloc>
       <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
