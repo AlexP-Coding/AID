@@ -447,11 +447,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Join rows by Mun</from>
-      <to>SortR by Mun</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Filter Jun23 B</from>
       <to>Select MunKWh</to>
       <enabled>Y</enabled>
@@ -462,22 +457,42 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>SortR by Mun</from>
-      <to>Group by Mun</to>
+      <from>Select MunCPE</from>
+      <to>Sort CPEs by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select MunCPE</from>
-      <to>Join rows by Mun</to>
+      <from>Sort CPEs by Mun</from>
+      <to>Group CPEs by Mun</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Sort kWh by Mun</from>
+      <to>Group kWh by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select MunKWh</from>
+      <to>Sort kWh by Mun</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Group CPEs by Mun</from>
       <to>Join rows by Mun</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Group by Mun</from>
+      <from>Group kWh by Mun</from>
+      <to>Join rows by Mun</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Join rows by Mun</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
       <to>Text file output</to>
       <enabled>Y</enabled>
     </hop>
@@ -665,7 +680,7 @@
     <buffer_size>50000</buffer_size>
     <lazy_conversion>N</lazy_conversion>
     <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
+    <parallel>Y</parallel>
     <newline_possible>N</newline_possible>
     <format>mixed</format>
     <encoding>UTF-8</encoding>
@@ -937,58 +952,6 @@
     </GUI>
   </step>
   <step>
-    <name>Group by Mun</name>
-    <type>GroupBy</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <all_rows>N</all_rows>
-    <ignore_aggregate>N</ignore_aggregate>
-    <field_ignore/>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>grp</prefix>
-    <add_linenr>N</add_linenr>
-    <linenr_fieldname/>
-    <give_back_row>N</give_back_row>
-    <group>
-      <field>
-        <name>Municipality</name>
-      </field>
-    </group>
-    <fields>
-      <field>
-        <aggregate>CPEs</aggregate>
-        <subject>Number of CPE's</subject>
-        <type>SUM</type>
-        <valuefield/>
-      </field>
-      <field>
-        <aggregate>kWh</aggregate>
-        <subject>Active Energy (kWh)</subject>
-        <type>SUM</type>
-        <valuefield/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>800</xloc>
-      <yloc>336</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Join rows by Mun</name>
     <type>JoinRows</type>
     <description/>
@@ -1025,8 +988,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>576</xloc>
-      <yloc>336</yloc>
+      <xloc>896</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1044,11 +1007,9 @@
     <fields>
       <field>
         <name>Municipality</name>
-        <rename/>
       </field>
       <field>
         <name>Number of CPE's</name>
-        <rename/>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1103,10 +1064,10 @@
     </GUI>
   </step>
   <step>
-    <name>SortR by Mun</name>
+    <name>Sort CPEs by Mun</name>
     <type>SortRows</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -1139,8 +1100,182 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>688</xloc>
-      <yloc>336</yloc>
+      <xloc>624</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Group CPEs by Mun</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>N</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>Municipality</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>CPEs</aggregate>
+        <subject>Number of CPE's</subject>
+        <type>SUM</type>
+        <valuefield/>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>768</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Sort kWh by Mun</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>municipality2</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>624</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Group kWh by Mun</name>
+    <type>GroupBy</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <all_rows>N</all_rows>
+    <ignore_aggregate>N</ignore_aggregate>
+    <field_ignore/>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>grp</prefix>
+    <add_linenr>N</add_linenr>
+    <linenr_fieldname/>
+    <give_back_row>N</give_back_row>
+    <group>
+      <field>
+        <name>municipality2</name>
+      </field>
+    </group>
+    <fields>
+      <field>
+        <aggregate>kWh</aggregate>
+        <subject>Active Energy (kWh)</subject>
+        <type>SUM</type>
+        <valuefield/>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>768</xloc>
+      <yloc>384</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <fields>
+      <field>
+        <name>Municipality</name>
+        <rename/>
+      </field>
+      <field>
+        <name>CPEs</name>
+        <rename/>
+      </field>
+      <field>
+        <name>kWh</name>
+        <rename/>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1024</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1163,13 +1298,13 @@
     <footer>N</footer>
     <format>DOS</format>
     <compression>None</compression>
-    <encoding/>
+    <encoding>UTF-8</encoding>
     <endedLine/>
     <fileNameInField>N</fileNameInField>
     <fileNameField/>
     <create_parent_folder>N</create_parent_folder>
     <file>
-      <name>/home/aid/Desktop/AID/Project/task1</name>
+      <name>${Internal.Entry.Current.Directory}/task1</name>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -1194,31 +1329,31 @@
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
       <field>
         <name>CPEs</name>
         <type>Integer</type>
-        <format>0</format>
+        <format>#</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
         <length>-1</length>
-        <precision>-1</precision>
+        <precision>0</precision>
       </field>
       <field>
         <name>kWh</name>
         <type>Number</type>
-        <format>0.#####</format>
+        <format>#.#</format>
         <currency/>
         <decimal>.</decimal>
         <group>,</group>
         <nullif/>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
@@ -1232,8 +1367,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>336</yloc>
+      <xloc>1136</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
