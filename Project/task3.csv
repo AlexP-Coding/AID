@@ -1,19 +1,19 @@
-d1;d2
-Aveiro          ;Aveiro          
-Beja            ;Beja            
-Braga           ;Braga           
-Bragança        ;Braganca        
-Castelo Branco  ;Castelo Branco  
-Coimbra         ;Coimbra         
-Faro            ;Faro            
-Guarda          ;Guarda          
-Leiria          ;Leiria          
-Lisboa          ;Lisboa          
-Portalegre      ;Portalegre      
-Porto           ;Porto           
-Santarém        ;Santarem        
-Setúbal         ;Setubal         
-Viana Do Castelo;Viana Do Castelo
-Vila Real       ;Vila Real       
-Viseu           ;Viseu           
-Évora           ;Evora           
+District_A;District_B
+Aveiro          ;AVEIRO          
+Beja            ;BEJA            
+Braga           ;BRAGA           
+Bragança        ;BRAGANCA        
+Castelo Branco  ;CASTELO BRANCO  
+Coimbra         ;COIMBRA         
+Évora           ;EVORA           
+Faro            ;FARO            
+Guarda          ;GUARDA          
+Leiria          ;LEIRIA          
+Lisboa          ;LISBOA          
+Portalegre      ;PORTALEGRE      
+Porto           ;PORTO           
+Santarém        ;SANTAREM        
+Setúbal         ;SETUBAL         
+Viana do Castelo;VIANA DO CASTELO
+Vila Real       ;VILA REAL       
+Viseu           ;VISEU           

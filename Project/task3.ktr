@@ -493,11 +493,6 @@
     </hop>
     <hop>
       <from>Join rows </from>
-      <to>LCase InitCap</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>LCase InitCap</from>
       <to>Calculate MatchVal</to>
       <enabled>Y</enabled>
     </hop>
@@ -538,7 +533,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>704</xloc>
+      <xloc>624</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -982,11 +977,11 @@
     <fields>
       <field>
         <name>d1</name>
-        <rename/>
+        <rename>District_A</rename>
       </field>
       <field>
         <name>d2</name>
-        <rename/>
+        <rename>District_B</rename>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -999,7 +994,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1008</xloc>
+      <xloc>928</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1027,7 +1022,7 @@
         <name>d1</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
+        <collator_enabled>Y</collator_enabled>
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
@@ -1069,7 +1064,7 @@
         <name>d2</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
+        <collator_enabled>Y</collator_enabled>
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
@@ -1085,59 +1080,6 @@
     <GUI>
       <xloc>320</xloc>
       <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>LCase InitCap</name>
-    <type>StringOperations</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>d1</in_stream_name>
-        <out_stream_name/>
-        <trim_type/>
-        <lower_upper>lower</lower_upper>
-        <padding_type/>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>Y</init_cap>
-        <mask_xml/>
-        <digits/>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>d2</in_stream_name>
-        <out_stream_name/>
-        <trim_type/>
-        <lower_upper>lower</lower_upper>
-        <padding_type/>
-        <pad_char/>
-        <pad_len/>
-        <init_cap>Y</init_cap>
-        <mask_xml/>
-        <digits/>
-        <remove_special_characters/>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>592</xloc>
-      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1184,26 +1126,26 @@
     </file>
     <fields>
       <field>
-        <name>d1</name>
+        <name>District_A</name>
         <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>16</length>
         <precision>-1</precision>
       </field>
       <field>
-        <name>d2</name>
+        <name>District_B</name>
         <type>String</type>
         <format/>
         <currency/>
         <decimal/>
         <group/>
         <nullif/>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <length>16</length>
         <precision>-1</precision>
       </field>
@@ -1217,7 +1159,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1120</xloc>
+      <xloc>1040</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1331,7 +1273,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>864</xloc>
+      <xloc>784</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
