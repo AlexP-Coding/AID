@@ -431,7 +431,7 @@
     <created_date>2023/10/15 12:59:53.970</created_date>
     <modified_user>-</modified_user>
     <modified_date>2023/10/15 12:59:53.970</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -501,26 +501,166 @@
   </connection>
   <order>
     <hop>
+      <from>sort date</from>
+      <to>unique date</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>redes csv</from>
-      <to>Sort rows</to>
+      <to>sort date</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Sort rows</from>
-      <to>Unique rows</to>
+      <from>map month names</from>
+      <to>populate dim table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Unique rows</from>
-      <to>Insert / update</to>
+      <from>unique date</from>
+      <to>map month names</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
+    <name>populate dim table</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>redes_dw</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>redes_dw</schema>
+      <table>dim_time</table>
+      <key>
+        <name>Date</name>
+        <field>DATE_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>DATE_ID</name>
+        <rename>Date</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>YEAR_ID</name>
+        <rename>﻿Year</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>MONTH_ID</name>
+        <rename>Month</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>MONTH_NAME</name>
+        <rename>month_name</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>960</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>sort date</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>Date</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>400</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>unique date</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>Date</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>560</xloc>
+      <yloc>208</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>redes csv</name>
     <type>CsvInput</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -591,8 +731,8 @@
     </GUI>
   </step>
   <step>
-    <name>Insert / update</name>
-    <type>InsertUpdate</type>
+    <name>map month names</name>
+    <type>ValueMapper</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -601,74 +741,57 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redes_dw</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>redes_dw</schema>
-      <table>dim_time</table>
-      <key>
-        <name>Date</name>
-        <field>TIME_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>TIME_ID</name>
-        <rename>Date</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>YEAR_ID</name>
-        <rename>﻿Year</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>MONTH_ID</name>
-        <rename>Month</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>496</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Sort rows</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
+    <field_to_use>Month</field_to_use>
+    <target_field>month_name</target_field>
+    <non_match_default/>
     <fields>
       <field>
-        <name>Date</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
+        <source_value>1</source_value>
+        <target_value>Jan</target_value>
+      </field>
+      <field>
+        <source_value>2</source_value>
+        <target_value>Fev</target_value>
+      </field>
+      <field>
+        <source_value>3</source_value>
+        <target_value>Mar</target_value>
+      </field>
+      <field>
+        <source_value>4</source_value>
+        <target_value>Apr</target_value>
+      </field>
+      <field>
+        <source_value>5</source_value>
+        <target_value>May</target_value>
+      </field>
+      <field>
+        <source_value>6</source_value>
+        <target_value>Jun</target_value>
+      </field>
+      <field>
+        <source_value>7</source_value>
+        <target_value>Jul</target_value>
+      </field>
+      <field>
+        <source_value>8</source_value>
+        <target_value>Ago</target_value>
+      </field>
+      <field>
+        <source_value>9</source_value>
+        <target_value>Sep</target_value>
+      </field>
+      <field>
+        <source_value>10</source_value>
+        <target_value>Oct</target_value>
+      </field>
+      <field>
+        <source_value>11</source_value>
+        <target_value>Nov</target_value>
+      </field>
+      <field>
+        <source_value>12</source_value>
+        <target_value>Dec</target_value>
       </field>
     </fields>
     <attributes/>
@@ -680,42 +803,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Unique rows</name>
-    <type>Unique</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <count_rows>N</count_rows>
-    <count_field/>
-    <reject_duplicate_row>N</reject_duplicate_row>
-    <error_description/>
-    <fields>
-      <field>
-        <name>Date</name>
-        <case_insensitive>N</case_insensitive>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>400</xloc>
+      <xloc>736</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
