@@ -315,7 +315,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Documents/AID/Project/dim_time.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/dim_time.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -354,7 +354,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Documents/AID/Project/dim_location.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/dim_location.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -393,7 +393,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Documents/AID/Project/dim_voltage.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/dim_voltage.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -432,7 +432,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Documents/AID/Project/dfact_consumption.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/fact_consumption.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>

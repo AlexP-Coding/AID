@@ -430,7 +430,7 @@
     <created_date>2023/10/15 14:51:41.576</created_date>
     <modified_user>-</modified_user>
     <modified_date>2023/10/15 14:51:41.576</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -500,11 +500,6 @@
   </connection>
   <order>
     <hop>
-      <from>sort ids</from>
-      <to>populate fact table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>time lookup</from>
       <to>location lookup</to>
       <enabled>Y</enabled>
@@ -516,20 +511,139 @@
     </hop>
     <hop>
       <from>voltage lookup</from>
-      <to>sort ids</to>
+      <to>populate fact table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>redes csv</from>
-      <to>filter null parish</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>filter null parish</from>
       <to>time lookup</to>
       <enabled>Y</enabled>
     </hop>
   </order>
+  <step>
+    <name>location lookup</name>
+    <type>DBLookup</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>redes_dw</connection>
+    <cache>N</cache>
+    <cache_load_all>N</cache_load_all>
+    <cache_size>0</cache_size>
+    <lookup>
+      <schema>redes_dw</schema>
+      <table>dim_location</table>
+      <orderby/>
+      <fail_on_multiple>N</fail_on_multiple>
+      <eat_row_on_failure>N</eat_row_on_failure>
+      <key>
+        <name>DistrictMunicipalityParishCode</name>
+        <field>PARISH_CODE</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>DistrictMunicipalityCode</name>
+        <field>MUNICIPALITY_CODE</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>DistrictCode</name>
+        <field>DISTRICT_CODE</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>LOCATION_ID</name>
+        <rename>LOCATION_ID</rename>
+        <default/>
+        <type>Integer</type>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>752</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>populate fact table</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>redes_dw</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>redes_dw</schema>
+      <table>fact_consumption</table>
+      <key>
+        <name>TIME_ID</name>
+        <field>TIME_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>LOCATION_ID</name>
+        <field>LOCATION_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>TIME_ID</name>
+        <rename>TIME_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>LOCATION_ID</name>
+        <rename>LOCATION_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>VOLTAGE_ID</name>
+        <rename>VOLTAGE_ID</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ENERGYCONSUMPTION</name>
+        <rename>Active Energy (kWh)</rename>
+        <update>Y</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1072</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>redes csv</name>
     <type>CsvInput</type>
@@ -541,7 +655,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>/home/aid/Documents/AID/Project/3-consumos-faturados-por-municipio-ultimos-10-anos.csv</filename>
+    <filename>/home/aid/Desktop/AID/Project/3-consumos-faturados-por-municipio-ultimos-10-anos.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -687,7 +801,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>304</xloc>
+      <xloc>448</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
@@ -741,66 +855,6 @@
     </GUI>
   </step>
   <step>
-    <name>location lookup</name>
-    <type>DBLookup</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>redes_dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>redes_dw</schema>
-      <table>dim_location</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>DistrictMunicipalityParishCode</name>
-        <field>PARISH_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>DistrictMunicipalityCode</name>
-        <field>MUNICIPALITY_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>DistrictCode</name>
-        <field>DISTRICT_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>LOCATION_ID</name>
-        <rename>LOCATION_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>752</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>voltage lookup</name>
     <type>DBLookup</type>
     <description/>
@@ -844,163 +898,6 @@
     </remotesteps>
     <GUI>
       <xloc>912</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>populate fact table</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>redes_dw</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>redes_dw</schema>
-      <table>fact_consumption</table>
-      <key>
-        <name>TIME_ID</name>
-        <field>TIME_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>LOCATION_ID</name>
-        <field>LOCATION_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>TIME_ID</name>
-        <rename>TIME_ID</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>LOCATION_ID</name>
-        <rename>LOCATION_ID</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>VOLTAGE_ID</name>
-        <rename>VOLTAGE_ID</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ENERGYCONSUMPTION</name>
-        <rename>Active Energy (kWh)</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1216</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>sort ids</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <directory>%%java.io.tmpdir%%</directory>
-    <prefix>out</prefix>
-    <sort_size>1000000</sort_size>
-    <free_memory/>
-    <compress>N</compress>
-    <compress_variable/>
-    <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>TIME_ID</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>LOCATION_ID</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>VOLTAGE_ID</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1056</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>filter null parish</name>
-    <type>FilterRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <send_true_to>time lookup</send_true_to>
-    <send_false_to/>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>DistrictMunicipalityParishCode</leftvalue>
-        <function>IS NOT NULL</function>
-        <rightvalue/>
-      </condition>
-    </compare>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>448</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>

@@ -1,8 +1,9 @@
 
-drop table if exists fact_consumption;
-drop table if exists dim_time;
-drop table if exists dim_location;
-drop table if exists dim_voltage;
+DROP DATABASE IF EXISTS redes_dw;
+
+CREATE DATABASE redes_dw;
+
+USE redes_dw;
 
 CREATE TABLE dim_time (
     TIME_ID INT AUTO_INCREMENT,
