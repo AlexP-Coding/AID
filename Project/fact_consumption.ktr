@@ -609,20 +609,26 @@
         <condition>=</condition>
         <name2/>
       </key>
+      <key>
+        <name>VOLTAGE_ID</name>
+        <field>VOLTAGE_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
       <value>
         <name>TIME_ID</name>
         <rename>TIME_ID</rename>
-        <update>Y</update>
+        <update>N</update>
       </value>
       <value>
         <name>LOCATION_ID</name>
         <rename>LOCATION_ID</rename>
-        <update>Y</update>
+        <update>N</update>
       </value>
       <value>
         <name>VOLTAGE_ID</name>
         <rename>VOLTAGE_ID</rename>
-        <update>Y</update>
+        <update>N</update>
       </value>
       <value>
         <name>ENERGYCONSUMPTION</name>
