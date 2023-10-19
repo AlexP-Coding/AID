@@ -500,28 +500,28 @@
   </connection>
   <order>
     <hop>
+      <from>voltage lookup</from>
+      <to>time lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>time lookup</from>
       <to>location lookup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>location lookup</from>
-      <to>voltage lookup</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>voltage lookup</from>
       <to>populate fact table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>redes csv</from>
-      <to>time lookup</to>
+      <to>voltage lookup</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>location lookup</name>
+    <name>voltage lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -532,36 +532,24 @@
       <schema_name/>
     </partitioning>
     <connection>redes_dw</connection>
-    <cache>N</cache>
+    <cache>Y</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>redes_dw</schema>
-      <table>dim_location</table>
+      <table>dim_voltage</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>DistrictMunicipalityParishCode</name>
-        <field>PARISH_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>DistrictMunicipalityCode</name>
-        <field>MUNICIPALITY_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>DistrictCode</name>
-        <field>DISTRICT_CODE</field>
+        <name>Voltage level</name>
+        <field>VOLTAGE_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>LOCATION_ID</name>
-        <rename>LOCATION_ID</rename>
+        <name>VOLTAGE_ID</name>
+        <rename>VOLTAGE_ID</rename>
         <default/>
         <type>Integer</type>
       </value>
@@ -575,77 +563,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>752</xloc>
-      <yloc>272</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>populate fact table</name>
-    <type>InsertUpdate</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name/>
-    </partitioning>
-    <connection>redes_dw</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>redes_dw</schema>
-      <table>fact_consumption</table>
-      <key>
-        <name>TIME_ID</name>
-        <field>TIME_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>LOCATION_ID</name>
-        <field>LOCATION_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>VOLTAGE_ID</name>
-        <field>VOLTAGE_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>TIME_ID</name>
-        <rename>TIME_ID</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>LOCATION_ID</name>
-        <rename>LOCATION_ID</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>VOLTAGE_ID</name>
-        <rename>VOLTAGE_ID</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ENERGYCONSUMPTION</name>
-        <rename>Active Energy (kWh)</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <attributes/>
-    <cluster_schema/>
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1072</xloc>
+      <xloc>320</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
@@ -671,33 +589,11 @@
     <buffer_size>50000</buffer_size>
     <lazy_conversion>N</lazy_conversion>
     <add_filename_result>N</add_filename_result>
-    <parallel>Y</parallel>
+    <parallel>N</parallel>
     <newline_possible>N</newline_possible>
-    <format>mixed</format>
-    <encoding/>
+    <format>DOS</format>
+    <encoding>UTF-8</encoding>
     <fields>
-      <field>
-        <name>﻿Year</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Month</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
       <field>
         <name>Date</name>
         <type>Date</type>
@@ -764,39 +660,6 @@
         <precision>3</precision>
         <trim_type>none</trim_type>
       </field>
-      <field>
-        <name>DistrictCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -807,7 +670,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
+      <xloc>128</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
@@ -824,7 +687,7 @@
       <schema_name/>
     </partitioning>
     <connection>redes_dw</connection>
-    <cache>N</cache>
+    <cache>Y</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
@@ -855,13 +718,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
+      <xloc>464</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>voltage lookup</name>
+    <name>location lookup</name>
     <type>DBLookup</type>
     <description/>
     <distribute>Y</distribute>
@@ -872,24 +735,36 @@
       <schema_name/>
     </partitioning>
     <connection>redes_dw</connection>
-    <cache>N</cache>
+    <cache>Y</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
       <schema>redes_dw</schema>
-      <table>dim_voltage</table>
+      <table>dim_location</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>Voltage level</name>
-        <field>VOLTAGE_NAME</field>
+        <name>parish</name>
+        <field>PARISH_NAME</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Municipality</name>
+        <field>MUNICIPALITY_NAME</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>District</name>
+        <field>DISTRICT_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>VOLTAGE_ID</name>
-        <rename>VOLTAGE_ID</rename>
+        <name>LOCATION_ID</name>
+        <rename>LOCATION_ID</rename>
         <default/>
         <type>Integer</type>
       </value>
@@ -903,7 +778,77 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
+      <xloc>608</xloc>
+      <yloc>272</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>populate fact table</name>
+    <type>InsertUpdate</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
+    </partitioning>
+    <connection>redes_dw</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>redes_dw</schema>
+      <table>fact_consumption</table>
+      <key>
+        <name>TIME_ID</name>
+        <field>TIME_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>LOCATION_ID</name>
+        <field>LOCATION_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>VOLTAGE_ID</name>
+        <field>VOLTAGE_ID</field>
+        <condition>=</condition>
+        <name2/>
+      </key>
+      <value>
+        <name>ENERGYCONSUMPTION</name>
+        <rename>Active Energy (kWh)</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>LOCATION_ID</name>
+        <rename>LOCATION_ID</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>TIME_ID</name>
+        <rename>TIME_ID</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>VOLTAGE_ID</name>
+        <rename>VOLTAGE_ID</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>800</xloc>
       <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>

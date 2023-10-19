@@ -534,52 +534,37 @@
       <schema>redes_dw</schema>
       <table>dim_location</table>
       <key>
-        <name>DistrictMunicipalityParishCode</name>
-        <field>PARISH_CODE</field>
+        <name>parish</name>
+        <field>PARISH_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <key>
-        <name>DistrictMunicipalityCode</name>
-        <field>MUNICIPALITY_CODE</field>
+        <name>Municipality</name>
+        <field>MUNICIPALITY_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <key>
-        <name>DistrictCode</name>
-        <field>DISTRICT_CODE</field>
+        <name>District</name>
+        <field>DISTRICT_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>PARISH_CODE</name>
-        <rename>DistrictMunicipalityParishCode</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>PARISH_NAME</name>
-        <rename>parish</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>MUNICIPALITY_CODE</name>
-        <rename>DistrictMunicipalityCode</rename>
+        <name>DISTRICT_NAME</name>
+        <rename>District</rename>
         <update>N</update>
       </value>
       <value>
         <name>MUNICIPALITY_NAME</name>
         <rename>Municipality</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>DISTRICT_CODE</name>
-        <rename>DistrictCode</rename>
         <update>N</update>
       </value>
       <value>
-        <name>DISTRICT_NAME</name>
-        <rename>District</rename>
-        <update>Y</update>
+        <name>PARISH_NAME</name>
+        <rename>parish</rename>
+        <update>N</update>
       </value>
     </lookup>
     <attributes/>
@@ -655,39 +640,6 @@
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
-      <field>
-        <name>DistrictCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
     </fields>
     <attributes/>
     <cluster_schema/>
@@ -698,8 +650,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>333</xloc>
-      <yloc>225</yloc>
+      <xloc>320</xloc>
+      <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -723,7 +675,7 @@
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>DistrictCode</name>
+        <name>District</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -731,7 +683,7 @@
         <presorted>N</presorted>
       </field>
       <field>
-        <name>DistrictMunicipalityCode</name>
+        <name>Municipality</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -739,7 +691,7 @@
         <presorted>N</presorted>
       </field>
       <field>
-        <name>DistrictMunicipalityParishCode</name>
+        <name>parish</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
         <collator_enabled>N</collator_enabled>
@@ -778,15 +730,15 @@
     <error_description/>
     <fields>
       <field>
-        <name>DistrictCode</name>
+        <name>District</name>
         <case_insensitive>N</case_insensitive>
       </field>
       <field>
-        <name>DistrictMunicipalityCode</name>
+        <name>Municipality</name>
         <case_insensitive>N</case_insensitive>
       </field>
       <field>
-        <name>DistrictMunicipalityParishCode</name>
+        <name>parish</name>
         <case_insensitive>N</case_insensitive>
       </field>
     </fields>
