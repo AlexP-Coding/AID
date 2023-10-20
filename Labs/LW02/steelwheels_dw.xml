@@ -2,7 +2,7 @@
   <Cube name="Orders" visible="true" cache="true" enabled="true">
     <Table name="fact_order">
     </Table>
-    <Dimension type="StandardDimension" visible="true" foreignKey="CUSTOMERNUMBER" name="Customers">
+    <Dimension type="StandardDimension" visible="true" foreignKey="CUSTOMERNUMBER" name="Customer">
       <Hierarchy name="Customer Hierarchy" visible="true" hasAll="true" allMemberName="All Customers" primaryKey="CUSTOMERNUMBER">
         <Table name="dim_customer" alias="">
         </Table>
