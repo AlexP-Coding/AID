@@ -1,0 +1,8 @@
+Query 44. returns the first 3 rows out of an ordered selection of all countries, by sales, in descending order - which corresponds to the top 3 countries with the most sales (USA, Spain, and France).
+See: HEAD(ORDER(..., DESC,),3)
+
+Query 45. returns (more straightforwardly), the top 3 countries with the most sales (USA, Spain, and France). 
+See: TOPCOUNT(..., 3 ...)
+
+Query 46. returns the countries which make up for the top 50% of sales. In this data warehouse's case, that corresponds to 3 countries: USA, Spain, and France.
+See: TOPPERCENT(..., 50, )
