@@ -501,11 +501,6 @@
   </connection>
   <order>
     <hop>
-      <from>unique location</from>
-      <to>populate dim table</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>sort location</from>
       <to>unique location</to>
       <enabled>Y</enabled>
@@ -515,10 +510,15 @@
       <to>sort location</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>unique location</from>
+      <to>Dimension lookup/update</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
-    <name>populate dim table</name>
-    <type>InsertUpdate</type>
+    <name>Dimension lookup/update</name>
+    <type>DimensionLookup</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -527,61 +527,61 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
+    <schema>redes_dw</schema>
+    <table>dim_location</table>
     <connection>redes_dw</connection>
     <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>redes_dw</schema>
-      <table>dim_location</table>
+    <update>Y</update>
+    <fields>
       <key>
+        <name>parish</name>
+        <lookup>PARISH_NAME</lookup>
+      </key>
+      <key>
+        <name>Municipality</name>
+        <lookup>MUNICIPALITY_NAME</lookup>
+      </key>
+      <key>
+        <name>District</name>
+        <lookup>DISTRICT_NAME</lookup>
+      </key>
+      <date>
+        <name/>
+        <from>DATE_FROM</from>
+        <to>DATE_TO</to>
+      </date>
+      <field>
         <name>DistrictMunicipalityParishCode</name>
-        <field>PARISH_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
+        <lookup>PARISH_CODE</lookup>
+        <update>Insert</update>
+      </field>
+      <field>
         <name>DistrictMunicipalityCode</name>
-        <field>MUNICIPALITY_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
+        <lookup>MUNICIPALITY_CODE</lookup>
+        <update>Insert</update>
+      </field>
+      <field>
         <name>DistrictCode</name>
-        <field>DISTRICT_CODE</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>PARISH_CODE</name>
-        <rename>DistrictMunicipalityParishCode</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>PARISH_NAME</name>
-        <rename>parish</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>MUNICIPALITY_CODE</name>
-        <rename>DistrictMunicipalityCode</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>MUNICIPALITY_NAME</name>
-        <rename>Municipality</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>DISTRICT_CODE</name>
-        <rename>DistrictCode</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>DISTRICT_NAME</name>
-        <rename>District</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
+        <lookup>DISTRICT_CODE</lookup>
+        <update>Insert</update>
+      </field>
+      <return>
+        <name>LOCATION_ID</name>
+        <rename/>
+        <creation_method>tablemax</creation_method>
+        <use_autoinc>N</use_autoinc>
+        <version>VERSION</version>
+      </return>
+    </fields>
+    <sequence/>
+    <min_year>1900</min_year>
+    <max_year>2199</max_year>
+    <cache_size>5000</cache_size>
+    <preload_cache>N</preload_cache>
+    <use_start_date_alternative>N</use_start_date_alternative>
+    <start_date_alternative>none</start_date_alternative>
+    <start_date_field_name/>
+    <useBatch>N</useBatch>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -591,7 +591,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>768</xloc>
+      <xloc>832</xloc>
       <yloc>224</yloc>
       <draw>Y</draw>
     </GUI>
@@ -723,10 +723,34 @@
     <unique_rows>N</unique_rows>
     <fields>
       <field>
+        <name>District</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>Y</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>Municipality</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>Y</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
+        <name>parish</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>Y</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+      <field>
         <name>DistrictCode</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
+        <collator_enabled>Y</collator_enabled>
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
@@ -734,7 +758,7 @@
         <name>DistrictMunicipalityCode</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
+        <collator_enabled>Y</collator_enabled>
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
@@ -742,7 +766,7 @@
         <name>DistrictMunicipalityParishCode</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
-        <collator_enabled>N</collator_enabled>
+        <collator_enabled>Y</collator_enabled>
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
@@ -765,7 +789,7 @@
     <name>unique location</name>
     <type>Unique</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -778,16 +802,28 @@
     <error_description/>
     <fields>
       <field>
+        <name>District</name>
+        <case_insensitive>Y</case_insensitive>
+      </field>
+      <field>
+        <name>Municipality</name>
+        <case_insensitive>Y</case_insensitive>
+      </field>
+      <field>
+        <name>parish</name>
+        <case_insensitive>Y</case_insensitive>
+      </field>
+      <field>
         <name>DistrictCode</name>
-        <case_insensitive>N</case_insensitive>
+        <case_insensitive>Y</case_insensitive>
       </field>
       <field>
         <name>DistrictMunicipalityCode</name>
-        <case_insensitive>N</case_insensitive>
+        <case_insensitive>Y</case_insensitive>
       </field>
       <field>
         <name>DistrictMunicipalityParishCode</name>
-        <case_insensitive>N</case_insensitive>
+        <case_insensitive>Y</case_insensitive>
       </field>
     </fields>
     <attributes/>

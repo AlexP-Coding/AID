@@ -6,6 +6,7 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -498,25 +499,88 @@
       </attribute>
     </attributes>
   </connection>
+  <connection>
+    <name>redesB_dw</name>
+    <server>localhost</server>
+    <type>MYSQL</type>
+    <access>Native</access>
+    <database>redesB_dw</database>
+    <port>3306</port>
+    <username>aid</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce10be93a6de</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
+        <attribute>500</attribute>
+      </attribute>
+      <attribute>
+        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
+        <attribute>true</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>3306</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>STREAM_RESULTS</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <order>
-    <hop>
-      <from>time lookup</from>
-      <to>location lookup</to>
-      <enabled>Y</enabled>
-    </hop>
     <hop>
       <from>location lookup</from>
       <to>voltage lookup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>voltage lookup</from>
-      <to>populate fact table</to>
+      <from>redes csv</from>
+      <to>location lookup</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>redes csv</from>
+      <from>voltage lookup</from>
       <to>time lookup</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>time lookup</from>
+      <to>populate fact table</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -531,32 +595,44 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redes_dw</connection>
+    <connection>redesB_dw</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
-      <schema>redes_dw</schema>
+      <schema/>
       <table>dim_location</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
       <eat_row_on_failure>N</eat_row_on_failure>
       <key>
-        <name>DistrictMunicipalityParishCode</name>
-        <field>PARISH_CODE</field>
+        <name>parish</name>
+        <field>PARISH_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <key>
-        <name>DistrictMunicipalityCode</name>
-        <field>MUNICIPALITY_CODE</field>
+        <name>Municipality</name>
+        <field>MUNICIPALITY_NAME</field>
         <condition>=</condition>
         <name2/>
       </key>
       <key>
-        <name>DistrictCode</name>
-        <field>DISTRICT_CODE</field>
+        <name>District</name>
+        <field>DISTRICT_NAME</field>
         <condition>=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Date</name>
+        <field>DATE_FROM</field>
+        <condition>&lt;=</condition>
+        <name2/>
+      </key>
+      <key>
+        <name>Date</name>
+        <field>DATE_TO</field>
+        <condition>&gt;</condition>
         <name2/>
       </key>
       <value>
@@ -575,8 +651,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>752</xloc>
-      <yloc>272</yloc>
+      <xloc>208</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -595,7 +671,7 @@
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
-      <schema>redes_dw</schema>
+      <schema/>
       <table>fact_consumption</table>
       <key>
         <name>TIME_ID</name>
@@ -616,23 +692,23 @@
         <name2/>
       </key>
       <value>
+        <name>ENERGYCONSUMPTION</name>
+        <rename>Active Energy (kWh)</rename>
+        <update>Y</update>
+      </value>
+      <value>
         <name>TIME_ID</name>
         <rename>TIME_ID</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
       <value>
         <name>LOCATION_ID</name>
         <rename>LOCATION_ID</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
       <value>
         <name>VOLTAGE_ID</name>
         <rename>VOLTAGE_ID</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ENERGYCONSUMPTION</name>
-        <rename>Active Energy (kWh)</rename>
         <update>Y</update>
       </value>
     </lookup>
@@ -645,8 +721,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
-      <yloc>272</yloc>
+      <xloc>672</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -701,7 +777,7 @@
       <field>
         <name>Date</name>
         <type>Date</type>
-        <format>yyyy-mm</format>
+        <format>yyyy-MM</format>
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>
@@ -807,8 +883,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>448</xloc>
-      <yloc>272</yloc>
+      <xloc>64</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -823,12 +899,12 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redes_dw</connection>
+    <connection>redesB_dw</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
-      <schema>redes_dw</schema>
+      <schema/>
       <table>dim_time</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
@@ -836,8 +912,8 @@
       <key>
         <name>Date</name>
         <field>DATE_ID</field>
-        <condition>=</condition>
-        <name2/>
+        <condition>BETWEEN</condition>
+        <name2>Date</name2>
       </key>
       <value>
         <name>TIME_ID</name>
@@ -855,8 +931,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
-      <yloc>272</yloc>
+      <xloc>528</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -871,12 +947,12 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redes_dw</connection>
+    <connection>redesB_dw</connection>
     <cache>N</cache>
     <cache_load_all>N</cache_load_all>
     <cache_size>0</cache_size>
     <lookup>
-      <schema>redes_dw</schema>
+      <schema>redesB_dw</schema>
       <table>dim_voltage</table>
       <orderby/>
       <fail_on_multiple>N</fail_on_multiple>
@@ -903,8 +979,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>912</xloc>
-      <yloc>272</yloc>
+      <xloc>368</xloc>
+      <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

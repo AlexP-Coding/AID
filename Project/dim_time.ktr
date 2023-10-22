@@ -625,22 +625,22 @@
       <value>
         <name>DATE_ID</name>
         <rename>Date</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
       <value>
         <name>YEAR_ID</name>
         <rename>﻿Year</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
       <value>
         <name>MONTH_ID</name>
         <rename>Month</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
       <value>
         <name>MONTH_NAME</name>
         <rename>month_name</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
     </lookup>
     <attributes/>
@@ -652,7 +652,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>960</xloc>
+      <xloc>944</xloc>
       <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
@@ -708,7 +708,7 @@
       <field>
         <name>Date</name>
         <type>Date</type>
-        <format>yyyy-mm</format>
+        <format>yyyy-MM</format>
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>

@@ -541,7 +541,7 @@
       <value>
         <name>VOLTAGE_NAME</name>
         <rename>Voltage level</rename>
-        <update>N</update>
+        <update>Y</update>
       </value>
     </lookup>
     <attributes/>

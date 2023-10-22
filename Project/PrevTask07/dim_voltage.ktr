@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>dim_location</name>
+    <name>dim_voltage</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
-    <trans_status>0</trans_status>
     <directory>/</directory>
     <parameters>
     </parameters>
@@ -428,9 +427,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2023/10/15 13:25:47.366</created_date>
+    <created_date>2023/10/15 14:07:44.230</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2023/10/15 13:25:47.366</modified_date>
+    <modified_date>2023/10/15 14:07:44.230</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -501,24 +500,24 @@
   </connection>
   <order>
     <hop>
-      <from>sort location</from>
-      <to>unique location</to>
+      <from>sort voltage</from>
+      <to>unique voltage</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>redes csv</from>
-      <to>sort location</to>
+      <to>sort voltage</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>unique location</from>
-      <to>Dimension lookup/update</to>
+      <from>unique voltage</from>
+      <to>populate dim table</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>Dimension lookup/update</name>
-    <type>DimensionLookup</type>
+    <name>populate dim table</name>
+    <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -527,61 +526,24 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <schema>redes_dw</schema>
-    <table>dim_location</table>
     <connection>redes_dw</connection>
     <commit>100</commit>
-    <update>Y</update>
-    <fields>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>redes_dw</schema>
+      <table>dim_voltage</table>
       <key>
-        <name>parish</name>
-        <lookup>PARISH_NAME</lookup>
+        <name>Voltage level</name>
+        <field>VOLTAGE_NAME</field>
+        <condition>=</condition>
+        <name2/>
       </key>
-      <key>
-        <name>Municipality</name>
-        <lookup>MUNICIPALITY_NAME</lookup>
-      </key>
-      <key>
-        <name>District</name>
-        <lookup>DISTRICT_NAME</lookup>
-      </key>
-      <date>
-        <name/>
-        <from>DATE_FROM</from>
-        <to>DATE_TO</to>
-      </date>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <lookup>PARISH_CODE</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <lookup>MUNICIPALITY_CODE</lookup>
-        <update>Insert</update>
-      </field>
-      <field>
-        <name>DistrictCode</name>
-        <lookup>DISTRICT_CODE</lookup>
-        <update>Insert</update>
-      </field>
-      <return>
-        <name>LOCATION_ID</name>
-        <rename/>
-        <creation_method>tablemax</creation_method>
-        <use_autoinc>N</use_autoinc>
-        <version>VERSION</version>
-      </return>
-    </fields>
-    <sequence/>
-    <min_year>1900</min_year>
-    <max_year>2199</max_year>
-    <cache_size>5000</cache_size>
-    <preload_cache>N</preload_cache>
-    <use_start_date_alternative>N</use_start_date_alternative>
-    <start_date_alternative>none</start_date_alternative>
-    <start_date_field_name/>
-    <useBatch>N</useBatch>
+      <value>
+        <name>VOLTAGE_NAME</name>
+        <rename>Voltage level</rename>
+        <update>N</update>
+      </value>
+    </lookup>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -591,8 +553,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>832</xloc>
-      <yloc>224</yloc>
+      <xloc>736</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -620,72 +582,17 @@
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
     <format>mixed</format>
-    <encoding/>
+    <encoding>UTF-8</encoding>
     <fields>
       <field>
-        <name>District</name>
+        <name>Voltage level</name>
         <type>String</type>
         <format/>
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>16</length>
+        <length>32</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Municipality</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>22</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>parish</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>30</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
     </fields>
@@ -698,13 +605,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>333</xloc>
-      <yloc>225</yloc>
+      <xloc>288</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>sort location</name>
+    <name>sort voltage</name>
     <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
@@ -723,50 +630,10 @@
     <unique_rows>N</unique_rows>
     <fields>
       <field>
-        <name>District</name>
+        <name>Voltage level</name>
         <ascending>Y</ascending>
         <case_sensitive>N</case_sensitive>
-        <collator_enabled>Y</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>Municipality</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>Y</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>parish</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>Y</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>DistrictCode</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>Y</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>Y</collator_enabled>
-        <collator_strength>0</collator_strength>
-        <presorted>N</presorted>
-      </field>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <collator_enabled>Y</collator_enabled>
+        <collator_enabled>N</collator_enabled>
         <collator_strength>0</collator_strength>
         <presorted>N</presorted>
       </field>
@@ -780,16 +647,16 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>464</xloc>
-      <yloc>224</yloc>
+      <xloc>432</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>unique location</name>
+    <name>unique voltage</name>
     <type>Unique</type>
     <description/>
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution/>
     <copies>1</copies>
     <partitioning>
@@ -802,28 +669,8 @@
     <error_description/>
     <fields>
       <field>
-        <name>District</name>
-        <case_insensitive>Y</case_insensitive>
-      </field>
-      <field>
-        <name>Municipality</name>
-        <case_insensitive>Y</case_insensitive>
-      </field>
-      <field>
-        <name>parish</name>
-        <case_insensitive>Y</case_insensitive>
-      </field>
-      <field>
-        <name>DistrictCode</name>
-        <case_insensitive>Y</case_insensitive>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <case_insensitive>Y</case_insensitive>
-      </field>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <case_insensitive>Y</case_insensitive>
+        <name>Voltage level</name>
+        <case_insensitive>N</case_insensitive>
       </field>
     </fields>
     <attributes/>
@@ -835,8 +682,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>608</xloc>
-      <yloc>224</yloc>
+      <xloc>576</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

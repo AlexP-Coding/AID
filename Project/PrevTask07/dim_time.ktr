@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>fact_consumption</name>
+    <name>dim_time</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -428,9 +428,9 @@
     <clusterschemas>
     </clusterschemas>
     <created_user>-</created_user>
-    <created_date>2023/10/15 14:51:41.576</created_date>
+    <created_date>2023/10/15 12:59:53.970</created_date>
     <modified_user>-</modified_user>
-    <modified_date>2023/10/15 14:51:41.576</modified_date>
+    <modified_date>2023/10/15 12:59:53.970</modified_date>
     <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
@@ -499,94 +499,31 @@
       </attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>redesB_dw</name>
-    <server>localhost</server>
-    <type>MYSQL</type>
-    <access>Native</access>
-    <database>redesB_dw</database>
-    <port>3306</port>
-    <username>aid</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce10be93a6de</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.defaultFetchSize</code>
-        <attribute>500</attribute>
-      </attribute>
-      <attribute>
-        <code>EXTRA_OPTION_MYSQL.useCursorFetch</code>
-        <attribute>true</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>3306</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>STREAM_RESULTS</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <order>
     <hop>
-      <from>location lookup</from>
-      <to>voltage lookup</to>
+      <from>sort date</from>
+      <to>unique date</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>redes csv</from>
-      <to>location lookup</to>
+      <to>sort date</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>voltage lookup</from>
-      <to>time lookup</to>
+      <from>map month names</from>
+      <to>populate dim table</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>time lookup</from>
-      <to>populate fact table</to>
+      <from>unique date</from>
+      <to>map month names</to>
       <enabled>Y</enabled>
     </hop>
   </order>
   <step>
-    <name>location lookup</name>
-    <type>DBLookup</type>
+    <name>map month names</name>
+    <type>ValueMapper</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -595,53 +532,59 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redesB_dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_location</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>parish</name>
-        <field>PARISH_NAME</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>Municipality</name>
-        <field>MUNICIPALITY_NAME</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>District</name>
-        <field>DISTRICT_NAME</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>Date</name>
-        <field>DATE_FROM</field>
-        <condition>&lt;=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>Date</name>
-        <field>DATE_TO</field>
-        <condition>&gt;</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>LOCATION_ID</name>
-        <rename>LOCATION_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
+    <field_to_use>Month</field_to_use>
+    <target_field>month_name</target_field>
+    <non_match_default/>
+    <fields>
+      <field>
+        <source_value>1</source_value>
+        <target_value>Jan</target_value>
+      </field>
+      <field>
+        <source_value>2</source_value>
+        <target_value>Fev</target_value>
+      </field>
+      <field>
+        <source_value>3</source_value>
+        <target_value>Mar</target_value>
+      </field>
+      <field>
+        <source_value>4</source_value>
+        <target_value>Apr</target_value>
+      </field>
+      <field>
+        <source_value>5</source_value>
+        <target_value>May</target_value>
+      </field>
+      <field>
+        <source_value>6</source_value>
+        <target_value>Jun</target_value>
+      </field>
+      <field>
+        <source_value>7</source_value>
+        <target_value>Jul</target_value>
+      </field>
+      <field>
+        <source_value>8</source_value>
+        <target_value>Ago</target_value>
+      </field>
+      <field>
+        <source_value>9</source_value>
+        <target_value>Sep</target_value>
+      </field>
+      <field>
+        <source_value>10</source_value>
+        <target_value>Oct</target_value>
+      </field>
+      <field>
+        <source_value>11</source_value>
+        <target_value>Nov</target_value>
+      </field>
+      <field>
+        <source_value>12</source_value>
+        <target_value>Dec</target_value>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -651,13 +594,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>208</xloc>
-      <yloc>144</yloc>
+      <xloc>736</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>populate fact table</name>
+    <name>populate dim table</name>
     <type>InsertUpdate</type>
     <description/>
     <distribute>Y</distribute>
@@ -671,45 +614,33 @@
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
-      <schema/>
-      <table>fact_consumption</table>
+      <schema>redes_dw</schema>
+      <table>dim_time</table>
       <key>
-        <name>TIME_ID</name>
-        <field>TIME_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>LOCATION_ID</name>
-        <field>LOCATION_ID</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <key>
-        <name>VOLTAGE_ID</name>
-        <field>VOLTAGE_ID</field>
+        <name>Date</name>
+        <field>DATE_ID</field>
         <condition>=</condition>
         <name2/>
       </key>
       <value>
-        <name>ENERGYCONSUMPTION</name>
-        <rename>Active Energy (kWh)</rename>
-        <update>Y</update>
+        <name>DATE_ID</name>
+        <rename>Date</rename>
+        <update>N</update>
       </value>
       <value>
-        <name>TIME_ID</name>
-        <rename>TIME_ID</rename>
-        <update>Y</update>
+        <name>YEAR_ID</name>
+        <rename>﻿Year</rename>
+        <update>N</update>
       </value>
       <value>
-        <name>LOCATION_ID</name>
-        <rename>LOCATION_ID</rename>
-        <update>Y</update>
+        <name>MONTH_ID</name>
+        <rename>Month</rename>
+        <update>N</update>
       </value>
       <value>
-        <name>VOLTAGE_ID</name>
-        <rename>VOLTAGE_ID</rename>
-        <update>Y</update>
+        <name>MONTH_NAME</name>
+        <rename>month_name</rename>
+        <update>N</update>
       </value>
     </lookup>
     <attributes/>
@@ -721,8 +652,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>672</xloc>
-      <yloc>144</yloc>
+      <xloc>960</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -747,7 +678,7 @@
     <buffer_size>50000</buffer_size>
     <lazy_conversion>N</lazy_conversion>
     <add_filename_result>N</add_filename_result>
-    <parallel>Y</parallel>
+    <parallel>N</parallel>
     <newline_possible>N</newline_possible>
     <format>mixed</format>
     <encoding/>
@@ -777,100 +708,12 @@
       <field>
         <name>Date</name>
         <type>Date</type>
-        <format>yyyy-MM</format>
+        <format>yyyy-mm</format>
         <currency>$</currency>
         <decimal>.</decimal>
         <group>,</group>
         <length>7</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>District</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>16</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Municipality</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>22</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>parish</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>30</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Voltage level</name>
-        <type>String</type>
-        <format/>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>32</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>Active Energy (kWh)</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>12</length>
-        <precision>3</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityCode</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DistrictMunicipalityParishCode</name>
-        <type>String</type>
-        <format>#</format>
-        <currency>$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
     </fields>
@@ -883,14 +726,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>64</xloc>
-      <yloc>144</yloc>
+      <xloc>208</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>time lookup</name>
-    <type>DBLookup</type>
+    <name>sort date</name>
+    <type>SortRows</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -899,29 +742,23 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redesB_dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema/>
-      <table>dim_time</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
+    <directory>%%java.io.tmpdir%%</directory>
+    <prefix>out</prefix>
+    <sort_size>1000000</sort_size>
+    <free_memory/>
+    <compress>N</compress>
+    <compress_variable/>
+    <unique_rows>N</unique_rows>
+    <fields>
+      <field>
         <name>Date</name>
-        <field>DATE_ID</field>
-        <condition>BETWEEN</condition>
-        <name2>Date</name2>
-      </key>
-      <value>
-        <name>TIME_ID</name>
-        <rename>TIME_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <collator_enabled>N</collator_enabled>
+        <collator_strength>0</collator_strength>
+        <presorted>N</presorted>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -931,14 +768,14 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>528</xloc>
-      <yloc>144</yloc>
+      <xloc>400</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>voltage lookup</name>
-    <type>DBLookup</type>
+    <name>unique date</name>
+    <type>Unique</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -947,29 +784,16 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <connection>redesB_dw</connection>
-    <cache>N</cache>
-    <cache_load_all>N</cache_load_all>
-    <cache_size>0</cache_size>
-    <lookup>
-      <schema>redesB_dw</schema>
-      <table>dim_voltage</table>
-      <orderby/>
-      <fail_on_multiple>N</fail_on_multiple>
-      <eat_row_on_failure>N</eat_row_on_failure>
-      <key>
-        <name>Voltage level</name>
-        <field>VOLTAGE_NAME</field>
-        <condition>=</condition>
-        <name2/>
-      </key>
-      <value>
-        <name>VOLTAGE_ID</name>
-        <rename>VOLTAGE_ID</rename>
-        <default/>
-        <type>Integer</type>
-      </value>
-    </lookup>
+    <count_rows>N</count_rows>
+    <count_field/>
+    <reject_duplicate_row>N</reject_duplicate_row>
+    <error_description/>
+    <fields>
+      <field>
+        <name>Date</name>
+        <case_insensitive>N</case_insensitive>
+      </field>
+    </fields>
     <attributes/>
     <cluster_schema/>
     <remotesteps>
@@ -979,8 +803,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>368</xloc>
-      <yloc>144</yloc>
+      <xloc>560</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

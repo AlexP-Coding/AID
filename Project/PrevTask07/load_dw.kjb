@@ -304,8 +304,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>32</xloc>
-      <yloc>32</yloc>
+      <xloc>240</xloc>
+      <yloc>224</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -315,7 +315,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Desktop/AID/Project/TestTask07/dim_time.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/dim_time.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -343,8 +343,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>128</xloc>
-      <yloc>32</yloc>
+      <xloc>384</xloc>
+      <yloc>224</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -354,7 +354,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Desktop/AID/Project/TestTask07/dim_location.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/dim_location.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -382,8 +382,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>224</xloc>
-      <yloc>32</yloc>
+      <xloc>544</xloc>
+      <yloc>224</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -393,7 +393,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Desktop/AID/Project/TestTask07/dim_voltage.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/dim_voltage.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -421,8 +421,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>336</xloc>
-      <yloc>32</yloc>
+      <xloc>704</xloc>
+      <yloc>224</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -432,7 +432,7 @@
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>/home/aid/Desktop/AID/Project/TestTask07/fact_consumption.ktr</filename>
+      <filename>/home/aid/Desktop/AID/Project/fact_consumption.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -460,8 +460,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>448</xloc>
-      <yloc>32</yloc>
+      <xloc>848</xloc>
+      <yloc>224</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
