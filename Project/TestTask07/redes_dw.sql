@@ -1,9 +1,9 @@
 
-DROP DATABASE IF EXISTS redesB_dw;
+DROP DATABASE IF EXISTS redes_dw;
 
-CREATE DATABASE redesB_dw;
+CREATE DATABASE redes_dw;
 
-USE redesB_dw;
+USE redes_dw;
 
 CREATE TABLE dim_time (
     TIME_ID INT AUTO_INCREMENT,

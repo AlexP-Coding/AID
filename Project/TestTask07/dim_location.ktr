@@ -437,11 +437,11 @@
   <notepads>
   </notepads>
   <connection>
-    <name>redesB_dw</name>
+    <name>redes_dw</name>
     <server>localhost</server>
     <type>MYSQL</type>
     <access>Native</access>
-    <database>redesB_dw</database>
+    <database>redes_dw</database>
     <port>3306</port>
     <username>aid</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79ce10be93a6de</password>
@@ -527,9 +527,9 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <schema>redesB_dw</schema>
+    <schema>redes_dw</schema>
     <table>dim_location</table>
-    <connection>redesB_dw</connection>
+    <connection>redes_dw</connection>
     <commit>100</commit>
     <update>Y</update>
     <fields>
