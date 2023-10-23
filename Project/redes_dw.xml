@@ -2,37 +2,37 @@
   <Cube name="Consumptions" visible="true" cache="true" enabled="true">
     <Table name="fact_consumption">
     </Table>
-    <Dimension type="StandardDimension" visible="true" foreignKey="LOCATION_ID" name="Location">
+    <Dimension type="StandardDimension" visible="true" foreignKey="LOCATION_ID" highCardinality="false" name="Location">
       <Hierarchy name="Location Hierarchy" visible="true" hasAll="true" allMemberName="All Locations" primaryKey="LOCATION_ID">
         <Table name="dim_location">
         </Table>
-        <Level name="Parish" visible="true" column="PARISH_NAME" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Parish" visible="true" column="PARISH_NAME" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         </Level>
-        <Level name="Municipality" visible="true" column="MUNICIPALITY_NAME" ordinalColumn="MUNICIPALITY_CODE" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Municipality" visible="true" column="MUNICIPALITY_NAME" ordinalColumn="MUNICIPALITY_CODE" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         </Level>
-        <Level name="District" visible="true" column="DISTRICT_NAME" ordinalColumn="DISTRICT_CODE" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="District" visible="true" column="DISTRICT_NAME" ordinalColumn="DISTRICT_CODE" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
-    <Dimension type="TimeDimension" visible="true" foreignKey="TIME_ID" name="Time">
+    <Dimension type="TimeDimension" visible="true" foreignKey="TIME_ID" highCardinality="false" name="Time">
       <Hierarchy name="Time Hierarchy" visible="true" hasAll="true" allMemberName="All Months" primaryKey="TIME_ID">
         <Table name="dim_time">
         </Table>
-        <Level name="Year" visible="true" column="YEAR_ID" type="Integer" uniqueMembers="false" levelType="TimeYears">
+        <Level name="Year" visible="true" column="YEAR_ID" type="Integer" uniqueMembers="false" levelType="TimeYears" hideMemberIf="Never">
         </Level>
-        <Level name="Month" visible="true" column="MONTH_NAME" ordinalColumn="MONTH_ID" type="String" uniqueMembers="false" levelType="TimeMonths">
+        <Level name="Month" visible="true" column="MONTH_NAME" ordinalColumn="MONTH_ID" type="String" uniqueMembers="false" levelType="TimeMonths" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
-    <Dimension type="StandardDimension" visible="true" foreignKey="VOLTAGE_ID" name="Voltage">
+    <Dimension type="StandardDimension" visible="true" foreignKey="VOLTAGE_ID" highCardinality="false" name="Voltage">
       <Hierarchy name="Voltage Hierarchy" visible="true" hasAll="true" allMemberName="All Voltages" primaryKey="VOLTAGE_ID">
         <Table name="dim_voltage">
         </Table>
-        <Level name="Voltage Level" visible="true" column="VOLTAGE_NAME" type="String" uniqueMembers="false" levelType="Regular">
+        <Level name="Voltage Level" visible="true" column="VOLTAGE_NAME" type="String" uniqueMembers="false" levelType="Regular" hideMemberIf="Never">
         </Level>
       </Hierarchy>
     </Dimension>
-    <Measure name="Consumption" column="ENERGYCONSUMPTION" datatype="Numeric" formatString="kWh #,##" aggregator="sum" visible="true">
+    <Measure name="Consumption (kWh)" column="ENERGYCONSUMPTION" datatype="Numeric" formatString="#,##0.000" aggregator="sum" visible="true">
     </Measure>
   </Cube>
 </Schema>
