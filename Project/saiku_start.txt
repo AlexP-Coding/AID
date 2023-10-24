@@ -1,0 +1,9 @@
+WITH
+SET [~COLUMNS] AS
+    {[Time.Time Hierarchy].[Year].Members}
+SET [~ROWS] AS
+    {[Location.Location Hierarchy].[District].Members}
+SELECT
+NON EMPTY CrossJoin([~COLUMNS], {[Measures].[Consumption (kWh)]}) ON COLUMNS,
+NON EMPTY [~ROWS] ON ROWS
+FROM [Consumptions]
